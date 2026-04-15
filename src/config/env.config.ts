@@ -3,6 +3,7 @@ import { z } from "zod";
 
 dotenv.config();
 
+console.log(process.env);
 const envSchema = z.object({
   JWT_ACCESS_SECRET: z.string().min(10),
   JWT_ACCESS_EXPIRES_IN: z.string().regex(/^\d+[smhd]$/),
