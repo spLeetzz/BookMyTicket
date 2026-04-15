@@ -1,0 +1,14 @@
+services:
+  bookticket_db:
+    image: postgres:17
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: pass
+      POSTGRES_DB: bookticket
+    volumes:
+      - bookticket_data:/var/lib/postgresql/data
+
+volumes:
+  bookticket_data:
