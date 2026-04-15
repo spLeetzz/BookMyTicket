@@ -1,17 +1,16 @@
 import type { Metadata, Viewport } from "next";
-import { Inter, Space_Mono } from "next/font/google";
+import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { AuthProvider } from "@/lib/auth-context";
 
-const inter = Inter({
+const geistSans = Geist({
   subsets: ["latin"],
-  variable: "--font-inter",
+  variable: "--font-geist-sans",
 });
 
-const spaceMono = Space_Mono({
+const geistMono = Geist_Mono({
   subsets: ["latin"],
-  weight: ["400", "700"],
-  variable: "--font-space-mono",
+  variable: "--font-geist-mono",
 });
 
 export const metadata: Metadata = {
@@ -31,8 +30,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={`${inter.variable} ${spaceMono.variable} bg-background`}>
-      <body className="min-h-screen antialiased">
+    <html lang="en" className={`${geistSans.variable} ${geistMono.variable}`}>
+      <body className="min-h-screen bg-background antialiased">
         <AuthProvider>{children}</AuthProvider>
       </body>
     </html>
