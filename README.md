@@ -1,4 +1,4 @@
-# BMS — Book My Ticket
+# BMT — Book My Ticket
 
 A movie seat booking backend with JWT authentication and PostgreSQL row-level locking to prevent double bookings.
 
@@ -93,31 +93,31 @@ Server starts on the port from `PORT` env variable (default `3000`).
 
 ### Auth
 
-| Method | Endpoint | Auth | Body |
-|--------|----------|------|------|
-| POST | `/auth/register` | No | `{ firstName, lastName?, email, password }` |
-| POST | `/auth/login` | No | `{ email, password }` |
-| POST | `/auth/logout` | Cookie | — |
-| POST | `/auth/refresh` | Cookie | — |
-| GET | `/google` | No | — |
-| GET | `/google/callback?code=&state=` | No | — |
+| Method | Endpoint                        | Auth   | Body                                        |
+| ------ | ------------------------------- | ------ | ------------------------------------------- |
+| POST   | `/auth/register`                | No     | `{ firstName, lastName?, email, password }` |
+| POST   | `/auth/login`                   | No     | `{ email, password }`                       |
+| POST   | `/auth/logout`                  | Cookie | —                                           |
+| POST   | `/auth/refresh`                 | Cookie | —                                           |
+| GET    | `/google`                       | No     | —                                           |
+| GET    | `/google/callback?code=&state=` | No     | —                                           |
 
 **Responses** return `{ accessToken }` in JSON. Refresh token is set as an httpOnly cookie (`refreshToken`).
 
 ### Seats
 
-| Method | Endpoint | Auth | Description |
-|--------|----------|------|-------------|
-| GET | `/seats` | No | All seats with booking status |
-| PUT | `/seats/:seatId/:userId` | Yes | Book a seat |
+| Method | Endpoint                 | Auth | Description                   |
+| ------ | ------------------------ | ---- | ----------------------------- |
+| GET    | `/seats`                 | No   | All seats with booking status |
+| PUT    | `/seats/:seatId/:userId` | Yes  | Book a seat                   |
 
 Booking returns the updated seat object. If already booked → `409 Conflict`.
 
 ### Health
 
-| Method | Endpoint | Auth |
-|--------|----------|------|
-| GET | `/health` | No |
+| Method | Endpoint  | Auth |
+| ------ | --------- | ---- |
+| GET    | `/health` | No   |
 
 ## Usage Examples
 
@@ -213,10 +213,10 @@ refresh_tokens
 
 ## Scripts
 
-| Command | Description |
-|---------|-------------|
-| `npm run dev` | TypeScript watch + auto-restart |
-| `npm run build` | Compile to `dist/` |
-| `npm start` | Run compiled app |
-| `npm run studio` | Drizzle database GUI |
-| `npm run seed` | Insert mock events + seats |
+| Command          | Description                     |
+| ---------------- | ------------------------------- |
+| `npm run dev`    | TypeScript watch + auto-restart |
+| `npm run build`  | Compile to `dist/`              |
+| `npm start`      | Run compiled app                |
+| `npm run studio` | Drizzle database GUI            |
+| `npm run seed`   | Insert mock events + seats      |
