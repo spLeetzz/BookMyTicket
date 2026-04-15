@@ -3,9 +3,15 @@
 import Link from "next/link";
 import { useAuth } from "@/lib/auth-context";
 import { Ticket, User, LogOut } from "lucide-react";
+import { useState, useEffect } from "react";
 
 export function Header() {
-  const { user, isAuthenticated, logout } = useAuth();
+  const { user, isAuthenticated, logout, isLoading } = useAuth();
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   const handleLogout = async () => {
     try {
@@ -39,7 +45,9 @@ export function Header() {
         </nav>
 
         <div className="flex items-center gap-4">
-          {isAuthenticated ? (
+          {!mounted || isLoading ? (
+            <div className="h-9 w-20 animate-pulse rounded-md bg-secondary" />
+          ) : isAuthenticated ? (
             <>
               <div className="hidden items-center gap-2 sm:flex">
                 <User className="h-4 w-4 text-muted-foreground" />

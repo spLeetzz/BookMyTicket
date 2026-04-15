@@ -17,18 +17,22 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 export function AuthProvider({ children }: { children: ReactNode }) {
   const [user, setUser] = useState<User | null>(null);
   const [isLoading, setIsLoading] = useState(true);
+  const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
+    setMounted(true);
     // Check if user is logged in on mount
-    const storedUser = localStorage.getItem("user");
-    const token = localStorage.getItem("accessToken");
-    
-    if (storedUser && token) {
-      try {
-        setUser(JSON.parse(storedUser));
-      } catch {
-        localStorage.removeItem("user");
-        localStorage.removeItem("accessToken");
+    if (typeof window !== "undefined") {
+      const storedUser = localStorage.getItem("user");
+      const token = localStorage.getItem("accessToken");
+      
+      if (storedUser && token) {
+        try {
+          setUser(JSON.parse(storedUser));
+        } catch {
+          localStorage.removeItem("user");
+          localStorage.removeItem("accessToken");
+        }
       }
     }
     setIsLoading(false);
