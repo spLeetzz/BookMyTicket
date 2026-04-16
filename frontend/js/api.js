@@ -1,41 +1,53 @@
-export const API_URL = 'http://localhost:3000';
+export const API_URL = "bookmyticket-production-5e82.up.railway.app";
 
 export const state = {
-  get token() { return localStorage.getItem('accessToken'); },
+  get token() {
+    return localStorage.getItem("accessToken");
+  },
   set token(val) {
-    if (val) localStorage.setItem('accessToken', val);
-    else localStorage.removeItem('accessToken');
+    if (val) localStorage.setItem("accessToken", val);
+    else localStorage.removeItem("accessToken");
   },
   get user() {
     const token = this.token;
     if (!token) return null;
     try {
-      const payloadBase64 = token.split('.')[1];
-      const decodedJson = atob(payloadBase64.replace(/-/g, '+').replace(/_/g, '/'));
+      const payloadBase64 = token.split(".")[1];
+      const decodedJson = atob(
+        payloadBase64.replace(/-/g, "+").replace(/_/g, "/"),
+      );
       return JSON.parse(decodedJson);
     } catch (e) {
       return null;
     }
-  }
+  },
 };
 
 export async function apiFetch(endpoint, options = {}) {
-  const headers = { 'Content-Type': 'application/json', ...(options.headers || {}) };
+  const headers = {
+    "Content-Type": "application/json",
+    ...(options.headers || {}),
+  };
   if (state.token) {
-    headers['Authorization'] = `Bearer ${state.token}`;
+    headers["Authorization"] = `Bearer ${state.token}`;
   }
 
   const response = await fetch(`${API_URL}${endpoint}`, {
     ...options,
     headers,
-    credentials: 'include',
+    credentials: "include",
   });
 
   let data;
-  try { data = await response.json(); } catch (e) { /* blank response */ }
+  try {
+    data = await response.json();
+  } catch (e) {
+    /* blank response */
+  }
 
   if (!response.ok) {
-    const msg = data?.error?.message || data?.message || `HTTP Error ${response.status}`;
+    const msg =
+      data?.error?.message || data?.message || `HTTP Error ${response.status}`;
     throw new Error(msg);
   }
 
