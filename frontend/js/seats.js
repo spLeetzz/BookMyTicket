@@ -18,7 +18,7 @@ async function loadSeats() {
       const event = await apiFetch(`/events`); // Assuming we can find it here or get all events
       const currentEvent = event.find(e => e.id == eventId);
       if (currentEvent) {
-          nameHeader.textContent = currentEvent.title;
+        nameHeader.textContent = currentEvent.title;
       }
     } catch (e) { console.log("Could not fetch event name") }
 
@@ -44,7 +44,7 @@ async function loadSeats() {
             statusClass = "bg-[#00daf3] text-[#001216] shadow-[0_0_20px_rgba(0,218,243,0.8)] border border-white/20";
           } else {
             // Occupied by others: Muted Crimson/Burgundy
-            statusClass = "bg-red-500/5 text-red-700/30 border border-red-900/20 cursor-not-allowed filter saturate-[0.3]";
+            statusClass = "bg-gray-500/10 text-gray-400 border border-gray-500/20 cursor-not-allowed opacity-50"
           }
         } else {
           // Available: Lighter Gray
@@ -68,26 +68,26 @@ async function loadSeats() {
       if (!seatEl || seatEl.dataset.booked === "true") return;
 
       const seatId = seatEl.dataset.id;
-      
+
       // Update UI for selected seat
       document.querySelectorAll("[data-id]").forEach(el => {
         if (el.dataset.booked === "false") {
-            el.classList.remove("bg-primary-fixed-dim", "ring-2", "ring-primary", "scale-110");
-            el.classList.add("bg-surface-container-high");
+          el.classList.remove("bg-primary-fixed-dim", "ring-2", "ring-primary", "scale-110");
+          el.classList.add("bg-surface-container-high");
         }
       });
-      
+
       seatEl.classList.remove("bg-surface-container-high");
       seatEl.classList.add("bg-primary-fixed-dim", "ring-2", "ring-primary", "scale-110");
-      
+
       // Show summary
       const summary = document.getElementById("selection-summary");
       const seatName = document.getElementById("selected-seat-name");
       const bookBtn = document.getElementById("book-btn");
-      
+
       summary.classList.remove("hidden");
       seatName.textContent = `Seat ${seatId}`;
-      
+
       bookBtn.onclick = () => bookSeat(seatId);
     };
   } catch (err) {
@@ -110,11 +110,11 @@ async function bookSeat(seatId) {
     // We pass the userId from state.user just in case the route logic still expects it.
     await apiFetch(`/seats/${seatId}`, { method: "PUT" });
     showToast("Seat booked successfully!");
-    
+
     // Hide summary after successful booking
     const summary = document.getElementById("selection-summary");
     if (summary) summary.classList.add("hidden");
-    
+
     loadSeats(); // Refresh grid
   } catch (err) {
     showToast(err.message, "error");
