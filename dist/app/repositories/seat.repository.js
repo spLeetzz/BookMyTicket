@@ -7,6 +7,10 @@ class SeatRepository {
         const result = await this.pool.query("SELECT * FROM seats"); // equivalent to Seats.find() in mongoose
         return result.rows;
     }
+    async findAllByEvent(eventId) {
+        const result = await this.pool.query("SELECT * FROM seats WHERE event_id = $1 ORDER BY seat_number ASC", [eventId]);
+        return result.rows;
+    }
     async bookSeat(data) {
         const conn = await this.pool.connect(); // pick a connection from the pool
         try {

@@ -8,6 +8,9 @@ class SeatService {
     async getAllSeats() {
         return this.seatRepo.findAll();
     }
+    async getSeatsByEvent(eventId) {
+        return this.seatRepo.findAllByEvent(eventId);
+    }
     async bookSeat(data) {
         // payment integration should be here
         // verify payment

@@ -85,7 +85,8 @@ class AuthController {
             });
             delete req.session.oauthState;
             this.setRefreshCookie(res, data.refreshToken, data.maxAge);
-            return res.status(200).json({ accessToken: data.accessToken });
+            const frontendUrl = process.env.FRONTEND_URL || "http://127.0.0.1:5500";
+            return res.redirect(`${frontendUrl}/oauth-callback.html#accessToken=${data.accessToken}`);
         }
         catch (error) {
             next(error);
@@ -95,7 +96,7 @@ class AuthController {
         res.cookie("refreshToken", token, {
             httpOnly: true,
             secure: process.env.NODE_ENV === "production",
-            sameSite: "strict",
+            sameSite: "lax",
             path: "/",
             maxAge,
         });

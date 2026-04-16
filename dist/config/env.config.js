@@ -9,7 +9,7 @@ const envSchema = z.object({
     DATABASE_URL: z.url(),
     PORT: z.coerce.number().default(3000),
     SESSION_SECRET: z.string().min(10),
-    FRONTEND_URL: z.url().optional(),
+    FRONTEND_URL: z.url(),
     NODE_ENV: z.enum(["dev", "production", "test"]).default("dev"),
     GOOGLE_CLIENT_ID: z.string().min(1),
     GOOGLE_CLIENT_SECRET: z.string().min(1),
