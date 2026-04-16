@@ -1,4 +1,4 @@
-export const API_URL = "bookmyticket-production-5e82.up.railway.app";
+export const API_URL = "https:bookmyticket-production-5e82.up.railway.app";
 
 export const state = {
   get token() {
